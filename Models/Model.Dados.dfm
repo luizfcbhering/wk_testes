@@ -9,6 +9,7 @@ object ModelDados: TModelDados
       'Password=wk@1q2w3e'
       'Port=3307'
       'DriverID=MySQL')
+    Connected = True
     LoginPrompt = False
     BeforeConnect = conWKBeforeConnect
     Left = 40
@@ -121,7 +122,7 @@ object ModelDados: TModelDados
         Name = 'CODIGO_PED'
         DataType = ftInteger
         ParamType = ptInput
-        Value = Null
+        Value = 0
       end>
     object qryItensPedidocodigo: TFDAutoIncField
       FieldName = 'codigo'

@@ -132,10 +132,14 @@ begin
   mtPedidos.EmptyDataSet;
   mtItensPedidos.EmptyDataSet;
 
+  mtPedidos.Close;
+  mtItensPedidos.Close;
+
   edtCodigoCli.Clear;
   edtNome.Clear;
   edtCodigoCli.SetFocus;
-  lblTotalPedido.Caption := 'Total: R$ 0,00';
+  lblTotalPedido.Caption := 'Total: R$';
+  edtValPedido.Text := '0,00';
 end;
 
 procedure TfPrincipal.btnPesquisarClick(Sender: TObject);
@@ -148,9 +152,6 @@ begin
     begin
       edtCodigoCli.Clear;
       edtNome.Clear;
-
-      mtPedidos.EmptyDataSet;
-      mtItensPedidos.EmptyDataSet;
 
       ModelDados.qryPedidos.Close;
       ModelDados.qryPedidos.ParamByName('codigo').AsInteger := StrToInt(Pedido);
@@ -202,8 +203,8 @@ begin
       edtCodigoCli.Clear;
       edtNome.Clear;
 
-      mtPedidos.EmptyDataSet;
-      mtItensPedidos.EmptyDataSet;
+      mtPedidos.Close;
+      mtItensPedidos.Close;
 
       ModelDados.qryPedidos.Close;
       ModelDados.qryPedidos.ParamByName('codigo').AsInteger := StrToInt(Pedido);
@@ -343,6 +344,12 @@ end;
 
 procedure TfPrincipal.GravarPedido;
 begin
+  if not (mtPedidos.Active) then
+  begin
+    mtPedidos.CreateDataSet;
+    mtItensPedidos.CreateDataSet;    
+  end;
+        
   mtPedidos.Append;
   mtPedidoscodigo.AsInteger      := 0;
   mtPedidoscodigo_cli.AsInteger  := FPedido.CodigoCli;
@@ -389,10 +396,13 @@ begin
   try
     for Prop in TypObj.GetProperties do
     begin
-      if (Prop.GetValue(TObject(Pedido)).Kind = tkFloat) or (Prop.GetValue(TObject(Pedido)).Kind = tkInteger) then
-        Prop.SetValue(TObject(Pedido), 0)
-      else if (Prop.GetValue(TObject(Pedido)).Kind in [tkString, tkUString, tkWideString]) then
-        Prop.SetValue(TObject(Pedido), '')
+      if Prop.Name <> 'RefCount' then
+      begin
+       if (Prop.GetValue(TObject(Pedido)).Kind = tkFloat) or (Prop.GetValue(TObject(Pedido)).Kind = tkInteger) then
+         Prop.SetValue(TObject(Pedido), 0)
+       else if (Prop.GetValue(TObject(Pedido)).Kind in [tkString, tkUString, tkWideString]) then
+         Prop.SetValue(TObject(Pedido), '')
+      end;
     end;
   except
     on E: Exception do

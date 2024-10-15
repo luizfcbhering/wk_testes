@@ -120,7 +120,7 @@ object fPrincipal: TfPrincipal
       OnClick = btnGravarPedidoClick
     end
     object btnPesquisar: TBitBtn
-      Left = 121
+      Left = 120
       Top = 6
       Width = 115
       Height = 25
@@ -244,6 +244,8 @@ object fPrincipal: TfPrincipal
     Height = 26
     Align = alBottom
     TabOrder = 4
+    ExplicitTop = 359
+    ExplicitWidth = 707
     object lblTotalPedido: TLabel
       Left = 517
       Top = 1
@@ -282,9 +284,9 @@ object fPrincipal: TfPrincipal
       ParentFont = False
       ReadOnly = True
       TabOrder = 0
-      Text = '100'
+      Text = '0,00'
       StyleElements = []
-      ExplicitHeight = 34
+      ExplicitLeft = 596
     end
   end
   object mtPedidos: TFDMemTable
